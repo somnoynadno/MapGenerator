@@ -1,0 +1,175 @@
+body
+{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.content-wrapper
+{
+    margin: 0 auto;
+    width: 1400px;
+}
+
+.content-wrapper > .menu
+{
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;
+    width: 50%;
+    height: 80px;
+
+    background-color: lightcoral; 
+    border-radius: 6px;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.content-wrapper > .menu > .item
+{
+    display: flex;
+    box-sizing: border-box;
+    
+    width: 20%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid black;
+
+    font-size: 24pt;
+
+    transition: 1s;
+    cursor: pointer;
+}
+
+.content-wrapper > .menu > .item:hover
+{
+    background-color: pink;
+}
+
+.content-wrapper > .menu > .item:last-child
+{
+    border: none;
+}
+
+.content-wrapper > .map
+{
+    margin: 0 auto;
+    width: 100%;
+}
+
+.content-wrapper > .map > .row
+{
+    margin-bottom: -32px;
+}
+
+.content-wrapper > .map > .row:nth-child(odd)
+{
+    margin-left: 16px;
+}
+
+.content-wrapper > .map > .row > img
+{
+    margin-left: -5px;
+}
+
+.float-menu
+{
+    display: fixed;
+    position: absolute;
+
+    width: 150px;
+    height: 300px;
+
+    top: 100px;
+    right: 5%;
+
+    background-color: pink;
+    border-radius: 18px;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.float-menu > .temperature
+{
+    margin: 20px auto;
+    padding: 12%;
+    text-align: center;
+
+    width: 80%;
+    height: 25%;
+
+    background-color: white;
+    border-radius: 20px;
+
+    box-sizing: border-box;
+    font-size: 24pt;
+    cursor: default;
+}
+
+.float-menu > .regulator
+{
+    display: flex;
+    align-items: center;
+
+    width: 80%;
+    height: 30px;
+    margin: 0 auto;
+
+    border: 1px solid black;
+    font-size: 16pt;
+    box-sizing: border-box;
+}
+
+.float-menu > .regulator > .item
+{
+    display: flex;
+    width: 30%;
+
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+    border: 1px solid black;
+
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.float-menu > .regulator > .item:hover
+{
+    background-color: violet;
+}
+
+.float-menu > .regulator #temperature-zero
+{
+    width: 40% !important;
+}
+
+.float-menu > .regulator #time-current
+{
+    width: 40% !important;
+}
+
+.float-menu > .regulator #time-current:hover
+{
+    background-color: pink;
+    cursor: default;
+}
+
+.float-menu > .time 
+{
+    margin: 20px auto;
+    text-align: center;
+
+    width: 80%;
+
+    background-color: white;
+    border-radius: 10px;
+
+    box-sizing: border-box;
+    font-size: 16pt;
+    cursor: default;
+}
