@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class Map implements Serializable {
-    public Integer width;
-    public Integer height;
-    public Vector<Vector<Tile>> tiles;
+    private Integer width;
+    private Integer height;
+    private Vector<Vector<Tile>> tiles;
 
     public Map(Integer w, Integer h){
         width = w;

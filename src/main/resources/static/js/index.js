@@ -3,6 +3,11 @@
 let w = 0;
 let h = 0;
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 function switchImageByID(tile, ID){
     tile.setAttribute('tileid', ID);
     switch (ID){
@@ -54,7 +59,33 @@ async function updateMap(){
     }
 }
 
+async function updateAnimals(){
+    let response = await fetch('http://localhost:4567/api/v1/animals/');
+    let animals = await response.json();
+
+    let map = document.getElementById("map");
+
+    for (let animal of animals){
+        let node = map.childNodes[animal.y].childNodes[animal.x];
+        switch (animal.id){
+            case 1:
+                node.setAttribute('src', 'static/img/herbivore.png');
+                break;
+            case 2:
+                node.setAttribute('src', 'static/img/predator.png');
+                break;
+            case 3:
+                node.setAttribute('src', 'static/img/human.png');
+                break;
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
     setTimeout(constructMap, 1000);
     setInterval(updateMap, 1000);
+
+    await sleep(1000);
+
+    setInterval(updateAnimals, 50);
 });

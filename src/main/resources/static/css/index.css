@@ -74,6 +74,8 @@ body
 .content-wrapper > .map > .row > img
 {
     margin-left: -5px;
+    width: 32px;
+    height: 48px;
 }
 
 .float-menu

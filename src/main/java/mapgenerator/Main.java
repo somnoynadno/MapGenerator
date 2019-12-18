@@ -27,6 +27,14 @@ public class Main {
             return json;
         });
 
+        get("/api/v1/animals/", (req, res) -> {
+            ObjectMapper ow = new ObjectMapper();
+            res.header("Content-Type", "application/json");
+            String json = ow.writeValueAsString(game.getAnimals());
+
+            return json;
+        });
+
         game = new Game();
         game.run();
     }
