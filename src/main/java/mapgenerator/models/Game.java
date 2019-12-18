@@ -26,12 +26,14 @@ public class Game implements Serializable {
         for (int seconds = 0; seconds != 1000; seconds++){
             System.out.println(seconds + " seconds");
 
-            for (Animal animal : animals){
-                animal.move(map);
+            for (int i = 0; i < animals.size(); i++){
+                animals.get(i).move(map, animals);
             }
 
+            System.out.println(animals.size() + " animals left");
+
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e){
                 e.printStackTrace();
             }
