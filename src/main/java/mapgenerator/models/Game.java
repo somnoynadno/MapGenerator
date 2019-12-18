@@ -23,4 +23,8 @@ public class Game implements Serializable {
             }
         }
     }
+
+    public Map getMap() {
+        return map;
+    }
 }

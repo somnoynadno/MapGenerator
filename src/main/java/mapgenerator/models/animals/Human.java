@@ -2,7 +2,15 @@ package mapgenerator.models.animals;
 
 public class Human extends Animal {
 
-    public Human(){
+    private Integer ID;
 
+    public Human(){
+        super();
+        ID = 3;
+    }
+
+    @Override
+    public Integer getID() {
+        return ID;
     }
 }

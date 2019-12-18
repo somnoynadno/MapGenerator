@@ -16,10 +16,10 @@ public class Map implements Serializable {
         width = w;
         height = h;
 
-        getRandomTiles();
+        setRandomTiles();
     }
 
-    private void getRandomTiles(){
+    private void setRandomTiles(){
         tiles = new Vector<Vector<Tile>>();
 
         for (int i = 0; i < width; i++){
@@ -37,5 +37,17 @@ public class Map implements Serializable {
             }
             tiles.add(r);
         }
+    }
+
+    public Vector<Vector<Tile>> getTiles() {
+        return tiles;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Integer getWidth() {
+        return width;
     }
 }

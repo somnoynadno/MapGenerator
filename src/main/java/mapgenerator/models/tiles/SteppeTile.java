@@ -2,7 +2,15 @@ package mapgenerator.models.tiles;
 
 public class SteppeTile extends Tile {
 
-    public SteppeTile(){
+    private Integer ID;
 
+    public SteppeTile(){
+        super();
+        ID = 1;
+    }
+
+    @Override
+    public Integer getID() {
+        return ID;
     }
 }

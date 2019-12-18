@@ -1,20 +1,33 @@
 package mapgenerator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import mapgenerator.models.Game;
 
 import static spark.Spark.*;
 
 public class Main {
-    public static int i;
+    public static Game game;
+
     public static void main(String[] args) {
         staticFileLocation("/");
 
-        get("/hello", (req, res) -> {
-            System.out.println(i);
-            return i;
+        get("/api/v1/map/", (req, res) -> {
+            ObjectMapper ow = new ObjectMapper();
+            res.header("Content-Type", "application/json");
+            String json = ow.writeValueAsString(game.getMap());
+
+            return json;
         });
 
-        Game game = new Game();
+        get("/api/v1/tiles/", (req, res) -> {
+            ObjectMapper ow = new ObjectMapper();
+            res.header("Content-Type", "application/json");
+            String json = ow.writeValueAsString(game.getMap().getTiles());
+
+            return json;
+        });
+
+        game = new Game();
         game.run();
     }
 }
