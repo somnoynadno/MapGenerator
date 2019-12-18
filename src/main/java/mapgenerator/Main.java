@@ -1,5 +1,7 @@
 package mapgenerator;
 
+import mapgenerator.models.Game;
+
 import static spark.Spark.*;
 
 public class Main {
@@ -12,15 +14,7 @@ public class Main {
             return i;
         });
 
-        i = 0;
-        while (i < 100){
-            System.out.println(i);
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            i++;
-        }
+        Game game = new Game();
+        game.run();
     }
 }
