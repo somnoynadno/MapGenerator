@@ -25,12 +25,11 @@ public class Game implements Serializable {
         System.out.println("Game started");
         for (int seconds = 0; seconds != 1000; seconds++){
             System.out.println(seconds + " seconds");
+            System.out.println(animals.size() + " animals left");
 
             for (int i = 0; i < animals.size(); i++){
                 animals.get(i).move(map, animals);
             }
-
-            System.out.println(animals.size() + " animals left");
 
             try {
                 Thread.sleep(2000);

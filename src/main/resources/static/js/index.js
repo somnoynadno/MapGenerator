@@ -7,7 +7,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
 function switchImageByID(tile, ID){
     tile.setAttribute('tileid', ID);
     switch (ID){
@@ -37,6 +36,18 @@ async function constructMap(){
         for (let j = 0; j < w; j++) {
             let img = document.createElement("img");
             switchImageByID(img, tiles[i][j].id);
+
+            img.setAttribute('X', j);
+            img.setAttribute('Y', i);
+
+            img.addEventListener('click', async function(){
+                let x = img.getAttribute('X');
+                let y = img.getAttribute('Y')
+                let response = await fetch('http://localhost:4567/api/v1/info/?x=' + x + "&y=" + y);
+                let json = await response.json();
+                console.log(json);
+            });
+
             row.appendChild(img);
         }
         map.appendChild(row);
