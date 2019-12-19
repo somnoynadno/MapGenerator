@@ -66,6 +66,9 @@ public class Game implements Serializable {
             int x = ThreadLocalRandom.current().nextInt(0, map.getWidth());
             int y = ThreadLocalRandom.current().nextInt(0, map.getHeight());
 
+            // check for water tile
+            if (map.getTiles().get(y).get(x).getID() == 3) continue;
+
             boolean overlap = false;
             for (Animal a : animals) {
                 if (x == a.getX() && y == a.getY()) {

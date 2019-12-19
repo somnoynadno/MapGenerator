@@ -2,6 +2,7 @@
 
 let w = 0;
 let h = 0;
+let day = 0;
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -16,6 +17,10 @@ function switchImageByID(tile, ID){
         case 2:
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
             break;
+        case 3:
+            tile.setAttribute('src', 'static/tiles/grid/hexset_grid_wdeep_flat_01.png');
+            break;
+
     }
 }
 
@@ -25,7 +30,11 @@ async function constructMap(){
 
     w = json.width;
     h = json.height;
+    temperature = json.temperature;
     let tiles = json.tiles;
+
+    let temp = document.getElementById('temperature');
+    temp.innerText = temperature + "°C";
 
     let map = document.getElementById("map");
     map.innerHTML = ''; // clear map
@@ -98,6 +107,11 @@ async function updateAnimals(){
     }
 }
 
+async function updateTime(){
+    let time = document.getElementById("time");
+    time.innerText = day++ + " days";
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
     setTimeout(constructMap, 1000);
     setInterval(updateMap, 1000);
@@ -105,4 +119,5 @@ document.addEventListener('DOMContentLoaded', async function () {
     await sleep(1000);
 
     setInterval(updateAnimals, 50);
+    setInterval(updateTime, 1000);
 });

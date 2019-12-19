@@ -50,9 +50,11 @@ public abstract class Animal extends Unit implements Serializable {
                 }
                 // check constraints
                 if (tempX >= 0 && tempX < map.getWidth()
-                        && tempY >= 0 && tempY < map.getHeight()){
-                    x = tempX;
-                    y = tempY;
+                        && tempY >= 0 && tempY < map.getHeight()){   // check for borders
+                    if (map.getTiles().get(y).get(x).getID() != 3) { // check for water
+                        x = tempX;
+                        y = tempY;
+                    }
                 } // else just exit
             }
         }
