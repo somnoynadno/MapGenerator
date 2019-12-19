@@ -16,7 +16,7 @@ public class Game implements Serializable {
 
     public Game(){
         map = new Map(100, 100);
-        animalNum = map.getHeight();
+        animalNum = map.getHeight()*3;
         animals = new Vector<Animal>();
     }
 
@@ -42,7 +42,7 @@ public class Game implements Serializable {
     private void spawnAnimals(){
         for (int i = 0; i < animalNum; i++){
             double flip = Math.random();
-            if (flip < 0.5){
+            if (flip < 0.6){
                 Herbivore a = new Herbivore();
                 giveCoordinates(a);
                 animals.add(a);

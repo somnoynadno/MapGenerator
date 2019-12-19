@@ -26,7 +26,7 @@ public class Map implements Serializable {
             Vector<Tile> r = new Vector<>();
             for (int j = 0; j < height; j++){
                 double flip = Math.random();
-                if (flip < 0.5){
+                if (flip < 0.7){
                     SteppeTile t = new SteppeTile();
                     r.add(t);
                 }
@@ -37,6 +37,10 @@ public class Map implements Serializable {
             }
             tiles.add(r);
         }
+    }
+
+    public void eatGrass(int x, int y){
+        tiles.get(y).set(x, new SteppeTile());
     }
 
     public Vector<Vector<Tile>> getTiles() {
