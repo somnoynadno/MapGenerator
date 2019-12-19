@@ -3,8 +3,8 @@ package mapgenerator.models;
 import java.io.Serializable;
 
 public class Unit implements Serializable {
-    private Integer x;
-    private Integer y;
+    protected  Integer x;
+    protected Integer y;
 
     public Unit(){
 

@@ -1,8 +1,8 @@
 package mapgenerator.models.animals;
 
-public class Herbivore extends Animal {
+import java.util.Vector;
 
-    private Integer ID;
+public class Herbivore extends Animal {
 
     public Herbivore(){
         super();
@@ -10,7 +10,7 @@ public class Herbivore extends Animal {
     }
 
     @Override
-    public Integer getID() {
-        return ID;
+    public void searchForTarget(Vector<Animal> animals){
+
     }
 }

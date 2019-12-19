@@ -1,8 +1,8 @@
 package mapgenerator.models.animals;
 
-public class Human extends Animal {
+import java.util.Vector;
 
-    private Integer ID;
+public class Human extends Animal {
 
     public Human(){
         super();
@@ -10,7 +10,16 @@ public class Human extends Animal {
     }
 
     @Override
-    public Integer getID() {
-        return ID;
+    public void searchForTarget(Vector<Animal> animals){
+        for (int i = 0; i < animals.size(); i++){
+            Animal animal = animals.get(i);
+            if (animal != this
+                    && Math.abs(animal.getX() - x) <= huntRadius
+                    && Math.abs(animal.getY() - y) <= huntRadius
+                    && animal.getID() != 3){
+                target = animal;
+                break;
+            }
+        }
     }
 }

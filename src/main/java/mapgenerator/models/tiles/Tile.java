@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Tile implements Serializable {
 
-    private Integer ID;
+    protected Integer ID;
 
     public Tile(){
         ID = 0;

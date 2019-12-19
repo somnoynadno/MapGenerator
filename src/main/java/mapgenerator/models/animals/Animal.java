@@ -3,17 +3,16 @@ package mapgenerator.models.animals;
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
 
-import javax.naming.spi.StateFactory;
 import java.io.Serializable;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Unit implements Serializable {
 
-    private Integer hunger;
-    private Integer ID;
-    private Animal target;
-    private final Integer huntRadius = 5;
+    protected Integer hunger;
+    protected Integer ID;
+    protected Animal target;
+    protected final Integer huntRadius = 5;
 
     public Animal(){
         super();
@@ -24,13 +23,7 @@ public abstract class Animal extends Unit implements Serializable {
 
     public void move(Map map, Vector<Animal> animals){
         hunger -= 1;
-
-        // death
-        if (hunger <= 0){
-            System.out.println("Death of hunger on " + getX() + " " + getY());
-            animals.remove(this);
-            return;
-        }
+        checkForDeath(animals);
 
         boolean huntResult = false;
         if (hunger < 10) {
@@ -42,44 +35,33 @@ public abstract class Animal extends Unit implements Serializable {
                 return; // just sleep
             } else {
                 int direction = ThreadLocalRandom.current().nextInt(1, 5);
-                int x = getX();
-                int y = getY();
+                int tempX = x;
+                int tempY = y;
 
                 switch (direction){
                     case 1:
-                        x += 1;
+                        tempX += 1;
                     case 2:
-                        x -= 1;
+                        tempX -= 1;
                     case 3:
-                        y += 1;
+                        tempY += 1;
                     case 4:
-                        y -= 1;
+                        tempY -= 1;
                 }
                 // check constraints
-                if (x >= 0 && x < map.getWidth() && y >= 0 && y < map.getHeight()){
-                    setX(x);
-                    setY(y);
+                if (tempX >= 0 && tempX < map.getWidth()
+                        && tempY >= 0 && tempY < map.getHeight()){
+                    x = tempX;
+                    y = tempY;
                 } // else just exit
             }
         }
     }
 
-    private boolean hunt(Vector<Animal> animals){
-        Integer x = getX();
-        Integer y = getY();
-
+    protected boolean hunt(Vector<Animal> animals){
         if (target == null){
-            // search for target
-            for (int i = 0; i < animals.size(); i++){
-                Animal animal = animals.get(i);
-                if (animal != this
-                        && Math.abs(animal.getX() - x) <= huntRadius
-                        && Math.abs(animal.getY() - y) <= huntRadius){
-                    target = animal;
-                    break;
-                }
-            }
-            return false;
+            searchForTarget(animals);
+            if (target == null) return false;
         }
         // hunt
         if (target.getX() > x){
@@ -95,9 +77,6 @@ public abstract class Animal extends Unit implements Serializable {
             y -= 1;
         }
 
-        setX(x);
-        setY(y);
-
         // kill
         if (x.equals(target.getX()) && y.equals(target.getY())){
             System.out.println("Kill on " + x + " " + y + "!");
@@ -107,6 +86,26 @@ public abstract class Animal extends Unit implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public void searchForTarget(Vector<Animal> animals){
+        for (int i = 0; i < animals.size(); i++){
+            Animal animal = animals.get(i);
+            if (animal != this
+                    && Math.abs(animal.getX() - x) <= huntRadius
+                    && Math.abs(animal.getY() - y) <= huntRadius){
+                target = animal;
+                break;
+            }
+        }
+    }
+
+    public void checkForDeath(Vector<Animal> animals){
+        if (hunger <= 0){
+            System.out.println("Death of hunger on " + getX() + " " + getY());
+            animals.remove(this);
+            return;
+        }
     }
 
     public Integer getHunger() {

@@ -76,8 +76,14 @@ async function updateAnimals(){
 
     let map = document.getElementById("map");
 
+    let node;
     for (let animal of animals){
-        let node = map.childNodes[animal.y].childNodes[animal.x];
+        try {
+            node = map.childNodes[animal.y].childNodes[animal.x];
+        } catch (e){
+            console.log(e.message);
+        }
+        if (node == undefined) continue;
         switch (animal.id){
             case 1:
                 node.setAttribute('src', 'static/img/herbivore.png');
