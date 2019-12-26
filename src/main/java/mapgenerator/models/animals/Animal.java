@@ -4,30 +4,34 @@ import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Unit implements Serializable {
 
     protected Integer hunger;
-    protected Integer ID;
-    protected Animal target;
+    protected Unit target;
     protected final Integer huntRadius = 5;
+    protected Set<Integer> possibleTargetIDs;
 
     public Animal(){
         super();
-        hunger = ThreadLocalRandom.current().nextInt(15, 40);
         ID = 0;
+        hunger = ThreadLocalRandom.current().nextInt(15, 40);
         target = null;
+        possibleTargetIDs = new HashSet<Integer>(Arrays.asList(10));
     }
 
-    public void move(Map map, Vector<Animal> animals){
+    public void move(Map map, Vector<Unit> units){
         hunger -= 1;
-        checkForDeath(animals);
+        checkForDeath(units);
 
         boolean huntResult = false;
         if (hunger < 10) {
-            huntResult = hunt(animals);
+            huntResult = hunt(units);
         }
         if (!huntResult) {
             double flip = Math.random();
@@ -60,9 +64,9 @@ public abstract class Animal extends Unit implements Serializable {
         }
     }
 
-    protected boolean hunt(Vector<Animal> animals){
+    protected boolean hunt(Vector<Unit> units){
         if (target == null){
-            searchForTarget(animals);
+            searchForTarget(units);
             if (target == null) return false;
         }
         // hunt
@@ -83,39 +87,36 @@ public abstract class Animal extends Unit implements Serializable {
         if (x.equals(target.getX()) && y.equals(target.getY())){
             System.out.println("Kill on " + x + " " + y + "!");
             hunger += 25;
-            animals.remove(target);
+            units.remove(target);
             target = null;
             return false;
         }
         return true;
     }
 
-    public void searchForTarget(Vector<Animal> animals){
-        for (int i = 0; i < animals.size(); i++){
-            Animal animal = animals.get(i);
-            if (animal != this
-                    && Math.abs(animal.getX() - x) <= huntRadius
-                    && Math.abs(animal.getY() - y) <= huntRadius){
-                target = animal;
+    public void searchForTarget(Vector<Unit> units){
+        for (int i = 0; i < units.size(); i++){
+            Unit unit = units.get(i);
+            if (possibleTargetIDs.contains(unit.getID())
+                    && unit != this
+                    && Math.abs(unit.getX() - x) <= huntRadius
+                    && Math.abs(unit.getY() - y) <= huntRadius){
+                target = unit;
                 break;
             }
         }
     }
 
-    public void checkForDeath(Vector<Animal> animals){
+    public void checkForDeath(Vector<Unit> units){
         if (hunger <= 0){
             System.out.println("Death of hunger on " + getX() + " " + getY());
-            animals.remove(this);
+            units.remove(this);
             return;
         }
     }
 
     public Integer getHunger() {
         return hunger;
-    }
-
-    public Integer getID() {
-        return ID;
     }
 }
 

@@ -2,7 +2,7 @@ package mapgenerator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mapgenerator.models.Game;
-import mapgenerator.models.animals.Animal;
+import mapgenerator.models.Unit;
 
 import java.util.Vector;
 
@@ -33,7 +33,7 @@ public class Main {
         get("/api/v1/animals/", (req, res) -> {
             ObjectMapper ow = new ObjectMapper();
             res.header("Content-Type", "application/json");
-            String json = ow.writeValueAsString(game.getAnimals());
+            String json = ow.writeValueAsString(game.getUnits());
 
             return json;
         });
@@ -45,10 +45,10 @@ public class Main {
             res.header("Content-Type", "application/json");
             ObjectMapper ow = new ObjectMapper();
 
-            Vector<Animal> animals = game.getAnimals();
-            for (int i = 0; i < animals.size(); i++) {
-                if (x == animals.get(i).getX() && y == animals.get(i).getY()){
-                    return ow.writeValueAsString(animals.get(i));
+            Vector<Unit> units = game.getUnits();
+            for (int i = 0; i < units.size(); i++) {
+                if (x == units.get(i).getX() && y == units.get(i).getY()){
+                    return ow.writeValueAsString(units.get(i));
                 }
             }
             return ow.writeValueAsString("No animal on position");

@@ -103,6 +103,9 @@ async function updateAnimals(){
             case 3:
                 node.setAttribute('src', 'static/img/human.png');
                 break;
+            case 10:
+                node.setAttribute('src', 'static/img/tree.png');
+                break;
         }
     }
 }

@@ -44,10 +44,6 @@ public class Map implements Serializable {
         }
     }
 
-    public void eatGrass(int x, int y){
-        tiles.get(y).set(x, new SteppeTile());
-    }
-
     public Vector<Vector<Tile>> getTiles() {
         return tiles;
     }

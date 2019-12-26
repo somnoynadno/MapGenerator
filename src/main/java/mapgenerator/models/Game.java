@@ -12,12 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game implements Serializable {
     private Map map;
     private Integer animalNum;
-    private Vector<Animal> animals;
+    private Vector<Unit> units;
 
     public Game(){
         map = new Map(100, 100);
         animalNum = map.getHeight()*3;
-        animals = new Vector<Animal>();
+        units = new Vector<Unit>();
     }
 
     public void run(){
@@ -25,10 +25,10 @@ public class Game implements Serializable {
         System.out.println("Game started");
         for (int seconds = 0; seconds != 1000; seconds++){
             System.out.println(seconds + " seconds");
-            System.out.println(animals.size() + " animals left");
+            System.out.println(units.size() + " animals left");
 
-            for (int i = 0; i < animals.size(); i++){
-                animals.get(i).move(map, animals);
+            for (int i = 0; i < units.size(); i++){
+                units.get(i).move(map, units);
             }
 
             try {
@@ -45,17 +45,17 @@ public class Game implements Serializable {
             if (flip < 0.6){
                 Herbivore a = new Herbivore();
                 giveCoordinates(a);
-                animals.add(a);
+                units.add(a);
             }
             else if (flip < 0.8) {
                 Predator a = new Predator();
                 giveCoordinates(a);
-                animals.add(a);
+                units.add(a);
             }
             else {
                 Human a = new Human();
                 giveCoordinates(a);
-                animals.add(a);
+                units.add(a);
             }
         }
     }
@@ -70,7 +70,7 @@ public class Game implements Serializable {
             if (map.getTiles().get(y).get(x).getID() == 3) continue;
 
             boolean overlap = false;
-            for (Animal a : animals) {
+            for (Unit a : units) {
                 if (x == a.getX() && y == a.getY()) {
                     overlap = true;
                     break;
@@ -93,7 +93,7 @@ public class Game implements Serializable {
         return animalNum;
     }
 
-    public Vector<Animal> getAnimals() {
-        return animals;
+    public Vector<Unit> getUnits() {
+        return units;
     }
 }
