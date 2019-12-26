@@ -59,6 +59,8 @@ body
 {
     margin: 0 auto;
     width: 100%;
+
+    transition: 0.3s;
 }
 
 .content-wrapper > .map > .row
@@ -76,6 +78,31 @@ body
     margin-left: -5px;
     width: 32px;
     height: 48px;
+
+    transition: 0.3s;
+}
+
+.unit-info
+{
+    display: fixed;
+    position: absolute;
+
+    width: 150px;
+    height: 250px;
+
+    top: 400px;
+    right: 5%;
+
+    border-radius: 18px;
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+}
+
+.unit-info img
+{
+    width: 75%;
+    height: auto;
 }
 
 .float-menu
@@ -84,7 +111,7 @@ body
     position: absolute;
 
     width: 150px;
-    height: 300px;
+    height: 250px;
 
     top: 100px;
     right: 5%;

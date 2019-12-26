@@ -28,15 +28,12 @@ public class Map implements Serializable {
             Vector<Tile> r = new Vector<>();
             for (int j = 0; j < height; j++){
                 double flip = Math.random();
-                if (flip < (0.5 + (float) temperature/100)){
+                if (flip < (0.7 + (float) temperature/100)){
                     SteppeTile t = new SteppeTile();
                     r.add(t);
                 }
-                else if (flip < (0.8 + (float) temperature/100)){
+                else {
                     GreenTile t = new GreenTile();
-                    r.add(t);
-                } else {
-                    WaterTile t = new WaterTile();
                     r.add(t);
                 }
             }

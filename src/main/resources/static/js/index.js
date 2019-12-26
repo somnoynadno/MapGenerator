@@ -3,9 +3,11 @@
 let w = 0;
 let h = 0;
 let day = 0;
+let tiles;
+let units;
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function switchImageByID(tile, ID){
@@ -20,7 +22,40 @@ function switchImageByID(tile, ID){
         case 3:
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_wdeep_flat_01.png');
             break;
+    }
+}
 
+function switchUnitByID(node, ID){
+    switch (ID){
+        case 1:
+            node.setAttribute('src', 'static/img/herbivore.png');
+            break;
+        case 2:
+            node.setAttribute('src', 'static/img/predator.png');
+            break;
+        case 3:
+            node.setAttribute('src', 'static/img/human.png');
+            break;
+        case 10:
+            node.setAttribute('src', 'static/img/tree.png');
+            break;
+    }
+}
+
+function getUnitNameByID(ID){
+    switch (ID){
+        case 1:
+            return 'Herbivore';
+            break;
+        case 2:
+            return 'Predator';
+            break;
+        case 3:
+            return 'Human';
+            break;
+        case 10:
+            return 'Tree';
+            break;
     }
 }
 
@@ -30,8 +65,8 @@ async function constructMap(){
 
     w = json.width;
     h = json.height;
-    temperature = json.temperature;
-    let tiles = json.tiles;
+    let temperature = json.temperature;
+    tiles = json.tiles;
 
     let temp = document.getElementById('temperature');
     temp.innerText = temperature + "°C";
@@ -49,12 +84,20 @@ async function constructMap(){
             img.setAttribute('X', j);
             img.setAttribute('Y', i);
 
-            img.addEventListener('click', async function(){
-                let x = img.getAttribute('X');
-                let y = img.getAttribute('Y')
-                let response = await fetch('http://localhost:4567/api/v1/info/?x=' + x + "&y=" + y);
-                let json = await response.json();
-                console.log(json);
+            img.addEventListener('click', function(){
+                for (let unit of units){
+                    if (unit.x == j && unit.y == i){
+                        console.log(unit);
+                        switchUnitByID(document.getElementById("unit-img"), unit.id)
+                        document.getElementById("unit-name").innerText = getUnitNameByID(unit.id)
+                        document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
+                        if (unit.hunger){
+                            document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
+                        } else document.getElementById("unit-hunger").innerText = ''
+                        return;
+                    }
+                }
+                console.log("No unit on position")
             });
 
             row.appendChild(img);
@@ -63,50 +106,28 @@ async function constructMap(){
     }
 }
 
-async function updateMap(){
-    let response = await fetch('http://localhost:4567/api/v1/tiles/');
-    let tiles = await response.json();
+async function updateUnits(){
+    let response = await fetch('http://localhost:4567/api/v1/units/');
+    units = await response.json();
 
     let map = document.getElementById("map");
 
     for (let i = 0; i < h; i++){
         for (let j = 0; j < w; j++){
             let tile = map.childNodes[i].childNodes[j];
-            if (tile.tileid != tiles[i][j].id){
-                switchImageByID(tile, tiles[i][j].id);
-            }
+            switchImageByID(tile, tiles[i][j].id);
         }
     }
-}
-
-async function updateAnimals(){
-    let response = await fetch('http://localhost:4567/api/v1/animals/');
-    let animals = await response.json();
-
-    let map = document.getElementById("map");
 
     let node;
-    for (let animal of animals){
+    for (let unit of units){
         try {
-            node = map.childNodes[animal.y].childNodes[animal.x];
+            node = map.childNodes[unit.y].childNodes[unit.x];
         } catch (e){
             console.log(e.message);
         }
         if (node == undefined) continue;
-        switch (animal.id){
-            case 1:
-                node.setAttribute('src', 'static/img/herbivore.png');
-                break;
-            case 2:
-                node.setAttribute('src', 'static/img/predator.png');
-                break;
-            case 3:
-                node.setAttribute('src', 'static/img/human.png');
-                break;
-            case 10:
-                node.setAttribute('src', 'static/img/tree.png');
-                break;
-        }
+        switchUnitByID(node, unit.id);
     }
 }
 
@@ -117,10 +138,8 @@ async function updateTime(){
 
 document.addEventListener('DOMContentLoaded', async function () {
     setTimeout(constructMap, 1000);
-    setInterval(updateMap, 1000);
+    await sleep(5000);
 
-    await sleep(1000);
-
-    setInterval(updateAnimals, 50);
+    setInterval(updateUnits, 50);
     setInterval(updateTime, 1000);
 });

@@ -1,6 +1,5 @@
 package mapgenerator.models;
 
-import mapgenerator.models.animals.Animal;
 import mapgenerator.models.animals.Herbivore;
 import mapgenerator.models.animals.Human;
 import mapgenerator.models.animals.Predator;
@@ -16,7 +15,7 @@ public class Game implements Serializable {
 
     public Game(){
         map = new Map(100, 100);
-        animalNum = map.getHeight()*3;
+        animalNum = map.getHeight()*4;
         units = new Vector<Unit>();
     }
 
@@ -25,14 +24,16 @@ public class Game implements Serializable {
         System.out.println("Game started");
         for (int seconds = 0; seconds != 1000; seconds++){
             System.out.println(seconds + " seconds");
-            System.out.println(units.size() + " animals left");
+            System.out.println(units.size() + " units left");
 
             for (int i = 0; i < units.size(); i++){
                 units.get(i).move(map, units);
             }
 
+            spawnTree();
+
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1500);
             } catch (InterruptedException e){
                 e.printStackTrace();
             }
@@ -42,25 +43,30 @@ public class Game implements Serializable {
     private void spawnAnimals(){
         for (int i = 0; i < animalNum; i++){
             double flip = Math.random();
-            if (flip < 0.6){
-                Herbivore a = new Herbivore();
-                giveCoordinates(a);
-                units.add(a);
+            if (flip < 0.3){
+                Tree u = new Tree();
+                giveCoordinates(u);
+                units.add(u);
+            }
+            else if (flip < 0.6){
+                Herbivore u = new Herbivore();
+                giveCoordinates(u);
+                units.add(u);
             }
             else if (flip < 0.8) {
-                Predator a = new Predator();
-                giveCoordinates(a);
-                units.add(a);
+                Predator u = new Predator();
+                giveCoordinates(u);
+                units.add(u);
             }
             else {
-                Human a = new Human();
-                giveCoordinates(a);
-                units.add(a);
+                Human u = new Human();
+                giveCoordinates(u);
+                units.add(u);
             }
         }
     }
 
-    private void giveCoordinates(Animal animal){
+    private void giveCoordinates(Unit unit){
         boolean flag = true;
         while (flag) {
             int x = ThreadLocalRandom.current().nextInt(0, map.getWidth());
@@ -78,10 +84,19 @@ public class Game implements Serializable {
             }
 
             if (!overlap){
-                animal.setX(x);
-                animal.setY(y);
+                unit.setX(x);
+                unit.setY(y);
                 flag = false;
             }
+        }
+    }
+
+    public void spawnTree(){
+        double flip = Math.random();
+        if (flip < 0.7){
+            Tree u = new Tree();
+            giveCoordinates(u);
+            units.add(u);
         }
     }
 

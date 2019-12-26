@@ -14,13 +14,13 @@ public abstract class Animal extends Unit implements Serializable {
 
     protected Integer hunger;
     protected Unit target;
-    protected final Integer huntRadius = 5;
+    protected final Integer huntRadius = 18;
     protected Set<Integer> possibleTargetIDs;
 
     public Animal(){
         super();
         ID = 0;
-        hunger = ThreadLocalRandom.current().nextInt(15, 40);
+        hunger = ThreadLocalRandom.current().nextInt(30, 70);
         target = null;
         possibleTargetIDs = new HashSet<Integer>(Arrays.asList(10));
     }
@@ -30,7 +30,7 @@ public abstract class Animal extends Unit implements Serializable {
         checkForDeath(units);
 
         boolean huntResult = false;
-        if (hunger < 10) {
+        if (hunger < 40) {
             huntResult = hunt(units);
         }
         if (!huntResult) {
@@ -86,7 +86,7 @@ public abstract class Animal extends Unit implements Serializable {
         // kill
         if (x.equals(target.getX()) && y.equals(target.getY())){
             System.out.println("Kill on " + x + " " + y + "!");
-            hunger += 25;
+            hunger += 35;
             units.remove(target);
             target = null;
             return false;
