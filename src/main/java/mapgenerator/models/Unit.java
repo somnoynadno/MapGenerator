@@ -8,11 +8,11 @@ public class Unit implements Serializable {
     protected Integer y;
     protected Integer ID;
 
-    public Unit(){
+    public Unit() {
 
     }
 
-    public void move(Map map, Vector<Unit> units){
+    public void move(Map map, Vector<Unit> units) {
 
     }
 

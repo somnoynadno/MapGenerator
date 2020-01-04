@@ -22,6 +22,9 @@ function switchImageByID(tile, ID){
         case 3:
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_wdeep_flat_01.png');
             break;
+        case 4:
+            tile.setAttribute('src', 'static/tiles/grid/hexset_grid_stone1_hill_01.png');
+            break;
     }
 }
 

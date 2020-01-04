@@ -8,20 +8,20 @@ import java.util.Vector;
 
 public class Predator extends Animal {
 
-    public Predator(){
+    public Predator() {
         super();
         ID = 2;
         possibleTargetIDs = new HashSet<Integer>(Arrays.asList(1));
     }
 
     @Override
-    public void searchForTarget(Vector<Unit> units){
-        for (int i = 0; i < units.size(); i++){
+    public void searchForTarget(Vector<Unit> units) {
+        for (int i = 0; i < units.size(); i++) {
             Unit unit = units.get(i);
             if (possibleTargetIDs.contains(unit.getID())
                     && unit != this
                     && Math.abs(unit.getX() - x) <= huntRadius
-                    && Math.abs(unit.getY() - y) <= huntRadius){
+                    && Math.abs(unit.getY() - y) <= huntRadius) {
                 target = unit;
                 break;
             }

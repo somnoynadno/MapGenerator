@@ -13,20 +13,20 @@ public class Game implements Serializable {
     private Integer animalNum;
     private Vector<Unit> units;
 
-    public Game(){
+    public Game() {
         map = new Map(100, 100);
-        animalNum = map.getHeight()*4;
+        animalNum = map.getHeight() * 4;
         units = new Vector<Unit>();
     }
 
-    public void run(){
+    public void run() {
         spawnAnimals();
         System.out.println("Game started");
-        for (int seconds = 0; seconds != 1000; seconds++){
+        for (int seconds = 0; seconds != 1000; seconds++) {
             System.out.println(seconds + " seconds");
             System.out.println(units.size() + " units left");
 
-            for (int i = 0; i < units.size(); i++){
+            for (int i = 0; i < units.size(); i++) {
                 units.get(i).move(map, units);
             }
 
@@ -34,31 +34,28 @@ public class Game implements Serializable {
 
             try {
                 Thread.sleep(1500);
-            } catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void spawnAnimals(){
-        for (int i = 0; i < animalNum; i++){
+    private void spawnAnimals() {
+        for (int i = 0; i < animalNum; i++) {
             double flip = Math.random();
-            if (flip < 0.3){
+            if (flip < 0.3) {
                 Tree u = new Tree();
                 giveCoordinates(u);
                 units.add(u);
-            }
-            else if (flip < 0.6){
+            } else if (flip < 0.6) {
                 Herbivore u = new Herbivore();
                 giveCoordinates(u);
                 units.add(u);
-            }
-            else if (flip < 0.8) {
+            } else if (flip < 0.8) {
                 Predator u = new Predator();
                 giveCoordinates(u);
                 units.add(u);
-            }
-            else {
+            } else {
                 Human u = new Human();
                 giveCoordinates(u);
                 units.add(u);
@@ -66,7 +63,7 @@ public class Game implements Serializable {
         }
     }
 
-    private void giveCoordinates(Unit unit){
+    private void giveCoordinates(Unit unit) {
         boolean flag = true;
         while (flag) {
             int x = ThreadLocalRandom.current().nextInt(0, map.getWidth());
@@ -83,7 +80,7 @@ public class Game implements Serializable {
                 }
             }
 
-            if (!overlap){
+            if (!overlap) {
                 unit.setX(x);
                 unit.setY(y);
                 flag = false;
@@ -91,9 +88,9 @@ public class Game implements Serializable {
         }
     }
 
-    public void spawnTree(){
+    public void spawnTree() {
         double flip = Math.random();
-        if (flip < 0.7){
+        if (flip < 0.7) {
             Tree u = new Tree();
             giveCoordinates(u);
             units.add(u);

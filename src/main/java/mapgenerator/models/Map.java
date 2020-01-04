@@ -1,9 +1,6 @@
 package mapgenerator.models;
 
-import mapgenerator.models.tiles.GreenTile;
-import mapgenerator.models.tiles.SteppeTile;
-import mapgenerator.models.tiles.Tile;
-import mapgenerator.models.tiles.WaterTile;
+import mapgenerator.models.tiles.*;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -13,26 +10,27 @@ public class Map implements Serializable {
     private Integer height;
     final private Integer temperature;
     private Vector<Vector<Tile>> tiles;
+    private Vector<House> houses;
 
-    public Map(Integer w, Integer h){
+    public Map(Integer w, Integer h) {
         width = w;
         height = h;
         temperature = 18;
+        houses = new Vector<>();
         setRandomTiles();
     }
 
-    private void setRandomTiles(){
+    private void setRandomTiles() {
         tiles = new Vector<Vector<Tile>>();
 
-        for (int i = 0; i < width; i++){
+        for (int i = 0; i < width; i++) {
             Vector<Tile> r = new Vector<>();
-            for (int j = 0; j < height; j++){
+            for (int j = 0; j < height; j++) {
                 double flip = Math.random();
-                if (flip < (0.7 + (float) temperature/100)){
+                if (flip < (0.7 + (float) temperature / 100)) {
                     SteppeTile t = new SteppeTile();
                     r.add(t);
-                }
-                else {
+                } else {
                     GreenTile t = new GreenTile();
                     r.add(t);
                 }
@@ -55,5 +53,20 @@ public class Map implements Serializable {
 
     public Integer getTemperature() {
         return temperature;
+    }
+
+    public Vector<House> getHouses() {
+        return houses;
+    }
+
+    public void addHouse(House house) {
+        int x = house.getX();
+        int y = house.getY();
+
+        // TODO: set other stone tiles
+        Tile t = new StoneTile();
+        tiles.get(y).set(x, t);
+
+        houses.add(house);
     }
 }

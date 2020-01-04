@@ -6,7 +6,7 @@ public abstract class Tile implements Serializable {
 
     protected Integer ID;
 
-    public Tile(){
+    public Tile() {
         ID = 0;
     }
 

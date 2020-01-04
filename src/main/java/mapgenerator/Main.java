@@ -47,7 +47,7 @@ public class Main {
 
             Vector<Unit> units = game.getUnits();
             for (int i = 0; i < units.size(); i++) {
-                if (x == units.get(i).getX() && y == units.get(i).getY()){
+                if (x == units.get(i).getX() && y == units.get(i).getY()) {
                     return ow.writeValueAsString(units.get(i));
                 }
             }
