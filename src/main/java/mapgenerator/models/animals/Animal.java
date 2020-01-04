@@ -15,11 +15,13 @@ public abstract class Animal extends Unit implements Serializable {
     protected Integer hunger;
     protected Unit target;
     protected final Integer huntRadius = 18;
+    protected int yearsAlive;
     protected Set<Integer> possibleTargetIDs;
 
     public Animal() {
         super();
         ID = 0;
+        yearsAlive = 0;
         hunger = ThreadLocalRandom.current().nextInt(30, 70);
         target = null;
         possibleTargetIDs = new HashSet<Integer>(Arrays.asList(10));
@@ -75,6 +77,7 @@ public abstract class Animal extends Unit implements Serializable {
 
     public void checkForDeath(Vector<Unit> units) {
         hunger -= 1;
+        yearsAlive += 1;
         if (hunger <= 0) {
             System.out.println("Death of hunger on " + getX() + " " + getY());
             units.remove(this);

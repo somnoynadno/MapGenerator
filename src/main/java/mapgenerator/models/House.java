@@ -15,8 +15,8 @@ public class House extends Unit {
 
     public boolean checkUnitInHouse(Unit unit) {
         boolean check = false;
-        if (Math.abs(x - unit.x) <= 1) {
-            if (Math.abs(y - unit.y) <= 1) {
+        if (Math.abs(x - unit.x) <= 3) {
+            if (Math.abs(y - unit.y) <= 3) {
                 check = true;
             }
         }

@@ -60,12 +60,19 @@ public class Map implements Serializable {
     }
 
     public void addHouse(House house) {
-        int x = house.getX();
-        int y = house.getY();
+        int x = house.getX() - 1;
+        int y = house.getY() - 1;
 
-        // TODO: set other stone tiles
-        Tile t = new StoneTile();
-        tiles.get(y).set(x, t);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                try {
+                    Tile t = new StoneTile();
+                    tiles.get(y + j).set(x + i, t);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         houses.add(house);
     }

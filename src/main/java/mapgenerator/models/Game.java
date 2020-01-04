@@ -14,7 +14,7 @@ public class Game implements Serializable {
     private Vector<Unit> units;
 
     public Game() {
-        map = new Map(100, 100);
+        map = new Map(150, 150);
         animalNum = map.getHeight() * 4;
         units = new Vector<Unit>();
     }

@@ -43,7 +43,7 @@ public class Human extends Animal {
     private void tryBuildHouse(Map map) {
         if (house == null) {
             double flip = Math.random();
-            if (flip < 0.1) {
+            if (flip < (float) yearsAlive / 2000) {
                 boolean freeSpace = true;
                 for (House house : map.getHouses()) {
                     if (house.checkUnitInHouse(this)) {
