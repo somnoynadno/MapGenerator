@@ -13,16 +13,16 @@ function sleep(ms) {
 function switchImageByID(tile, ID){
     tile.setAttribute('tileid', ID);
     switch (ID){
-        case 1:
+        case "STEPPE":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_desert_flat_01.png');
             break;
-        case 2:
+        case "GREEN":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
             break;
-        case 3:
+        case "WATER":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_wdeep_flat_01.png');
             break;
-        case 4:
+        case "STONE":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_stone1_hill_01.png');
             break;
     }
@@ -30,34 +30,17 @@ function switchImageByID(tile, ID){
 
 function switchUnitByID(node, ID){
     switch (ID){
-        case 1:
+        case "HERBIVORE":
             node.setAttribute('src', 'static/img/herbivore.png');
             break;
-        case 2:
+        case "PREDATOR":
             node.setAttribute('src', 'static/img/predator.png');
             break;
-        case 3:
+        case "HUMAN":
             node.setAttribute('src', 'static/img/human.png');
             break;
-        case 10:
+        case "TREE":
             node.setAttribute('src', 'static/img/tree.png');
-            break;
-    }
-}
-
-function getUnitNameByID(ID){
-    switch (ID){
-        case 1:
-            return 'Herbivore';
-            break;
-        case 2:
-            return 'Predator';
-            break;
-        case 3:
-            return 'Human';
-            break;
-        case 10:
-            return 'Tree';
             break;
     }
 }
@@ -82,7 +65,7 @@ async function constructMap(){
         row.classList.add("row");
         for (let j = 0; j < w; j++) {
             let img = document.createElement("img");
-            switchImageByID(img, tiles[i][j].id);
+            switchImageByID(img, tiles[i][j].tileType);
 
             img.setAttribute('X', j);
             img.setAttribute('Y', i);
@@ -91,8 +74,8 @@ async function constructMap(){
                 for (let unit of units){
                     if (unit.x == j && unit.y == i){
                         console.log(unit);
-                        switchUnitByID(document.getElementById("unit-img"), unit.id)
-                        document.getElementById("unit-name").innerText = getUnitNameByID(unit.id)
+                        switchUnitByID(document.getElementById("unit-img"), unit.unitType)
+                        document.getElementById("unit-name").innerText = unit.unitType
                         document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
                         if (unit.hunger){
                             document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
@@ -118,7 +101,7 @@ async function updateUnits(){
     for (let i = 0; i < h; i++){
         for (let j = 0; j < w; j++){
             let tile = map.childNodes[i].childNodes[j];
-            switchImageByID(tile, tiles[i][j].id);
+            switchImageByID(tile, tiles[i][j].tileType);
         }
     }
 
@@ -130,7 +113,7 @@ async function updateUnits(){
             console.log(e.message);
         }
         if (node == undefined) continue;
-        switchUnitByID(node, unit.id);
+        switchUnitByID(node, unit.unitType);
     }
 }
 

@@ -3,12 +3,13 @@ package mapgenerator.models;
 public class House extends Unit {
     public House() {
         super();
-        ID = 20;
+        unitType = UnitType.HOUSE;
     }
 
     public House(int X, int Y) {
         super();
-        ID = 20;
+        unitType = UnitType.HOUSE;
+
         x = X;
         y = Y;
     }

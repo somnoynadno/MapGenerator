@@ -4,6 +4,6 @@ public class SteppeTile extends Tile {
 
     public SteppeTile() {
         super();
-        ID = 1;
+        tileType = TileType.STEPPE;
     }
 }

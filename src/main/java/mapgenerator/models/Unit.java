@@ -6,10 +6,10 @@ import java.util.Vector;
 public class Unit implements Serializable {
     protected Integer x;
     protected Integer y;
-    protected Integer ID;
+    protected UnitType unitType;
 
     public Unit() {
-
+        unitType = UnitType.UNIT;
     }
 
     public void move(Map map, Vector<Unit> units) {
@@ -24,8 +24,8 @@ public class Unit implements Serializable {
         return y;
     }
 
-    public Integer getID() {
-        return ID;
+    public UnitType getUnitType() {
+        return unitType;
     }
 
     public void setX(Integer x) {

@@ -4,6 +4,6 @@ public class GreenTile extends Tile {
 
     public GreenTile() {
         super();
-        ID = 2;
+        tileType = TileType.GREEN;
     }
 }

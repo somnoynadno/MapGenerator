@@ -3,6 +3,7 @@ package mapgenerator.models;
 import mapgenerator.models.animals.Herbivore;
 import mapgenerator.models.animals.Human;
 import mapgenerator.models.animals.Predator;
+import mapgenerator.models.tiles.TileType;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -70,7 +71,7 @@ public class Game implements Serializable {
             int y = ThreadLocalRandom.current().nextInt(0, map.getHeight());
 
             // check for water tile
-            if (map.getTiles().get(y).get(x).getID() == 3) continue;
+            if (map.getTiles().get(y).get(x).getTileType() == TileType.WATER) continue;
 
             boolean overlap = false;
             for (Unit a : units) {

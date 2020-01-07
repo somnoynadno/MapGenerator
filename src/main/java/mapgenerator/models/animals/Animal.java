@@ -2,6 +2,8 @@ package mapgenerator.models.animals;
 
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
+import mapgenerator.models.UnitType;
+import mapgenerator.models.tiles.TileType;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -16,15 +18,15 @@ public abstract class Animal extends Unit implements Serializable {
     protected Unit target;
     protected final Integer huntRadius = 18;
     protected int yearsAlive;
-    protected Set<Integer> possibleTargetIDs;
+    protected Set<UnitType> possibleTargets;
 
     public Animal() {
         super();
-        ID = 0;
+        unitType = UnitType.ANIMAL;
         yearsAlive = 0;
         hunger = ThreadLocalRandom.current().nextInt(30, 70);
         target = null;
-        possibleTargetIDs = new HashSet<Integer>(Arrays.asList(10));
+        possibleTargets = new HashSet<UnitType>(Arrays.asList(UnitType.ANIMAL));
     }
 
     public void move(Map map, Vector<Unit> units) {
@@ -65,7 +67,7 @@ public abstract class Animal extends Unit implements Serializable {
     public void searchForTarget(Vector<Unit> units) {
         for (int i = 0; i < units.size(); i++) {
             Unit unit = units.get(i);
-            if (possibleTargetIDs.contains(unit.getID())
+            if (possibleTargets.contains(unit.getUnitType())
                     && unit != this
                     && Math.abs(unit.getX() - x) <= huntRadius
                     && Math.abs(unit.getY() - y) <= huntRadius) {
@@ -112,7 +114,7 @@ public abstract class Animal extends Unit implements Serializable {
                 // check constraints
                 if (tempX >= 0 && tempX < map.getWidth()
                         && tempY >= 0 && tempY < map.getHeight()) {   // check for borders
-                    if (map.getTiles().get(y).get(x).getID() != 3) { // check for water
+                    if (map.getTiles().get(y).get(x).getTileType() != TileType.WATER) { // check for water
                         x = tempX;
                         y = tempY;
                     }

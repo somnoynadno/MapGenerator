@@ -3,6 +3,7 @@ package mapgenerator.models.animals;
 import mapgenerator.models.House;
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
+import mapgenerator.models.UnitType;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,16 +15,20 @@ public class Human extends Animal {
 
     public Human() {
         super();
-        ID = 3;
+        unitType = UnitType.HUMAN;
         house = null;
-        possibleTargetIDs = new HashSet<Integer>(Arrays.asList(1, 2, 10));
+        possibleTargets = new HashSet<UnitType>(Arrays.asList(
+                UnitType.TREE,
+                UnitType.HERBIVORE,
+                UnitType.PREDATOR
+        ));
     }
 
     @Override
     public void searchForTarget(Vector<Unit> units) {
         for (int i = 0; i < units.size(); i++) {
             Unit unit = units.get(i);
-            if (possibleTargetIDs.contains(unit.getID())
+            if (possibleTargets.contains(unit.getUnitType())
                     && unit != this
                     && Math.abs(unit.getX() - x) <= huntRadius
                     && Math.abs(unit.getY() - y) <= huntRadius) {

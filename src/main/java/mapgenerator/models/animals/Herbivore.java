@@ -1,6 +1,7 @@
 package mapgenerator.models.animals;
 
 import mapgenerator.models.Unit;
+import mapgenerator.models.UnitType;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,15 +11,15 @@ public class Herbivore extends Animal {
 
     public Herbivore() {
         super();
-        ID = 1;
-        possibleTargetIDs = new HashSet<Integer>(Arrays.asList(10));
+        unitType = UnitType.HERBIVORE;
+        possibleTargets = new HashSet<UnitType>(Arrays.asList(UnitType.TREE));
     }
 
     @Override
     public void searchForTarget(Vector<Unit> units) {
         for (int i = 0; i < units.size(); i++) {
             Unit unit = units.get(i);
-            if (possibleTargetIDs.contains(unit.getID())
+            if (possibleTargets.contains(unit.getUnitType())
                     && Math.abs(unit.getX() - x) <= huntRadius
                     && Math.abs(unit.getY() - y) <= huntRadius
             ) {
