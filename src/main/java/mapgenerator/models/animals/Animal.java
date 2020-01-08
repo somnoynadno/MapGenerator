@@ -25,11 +25,20 @@ public abstract class Animal extends Unit implements Serializable {
     @JsonIgnore
     protected Set<UnitType> possibleTargets;
 
+    @JsonIgnore
+    protected int minDefaultHunger = 60;
+    @JsonIgnore
+    protected int maxDefaultHunger = 120;
+    @JsonIgnore
+    protected int hungerIncreaseValue = 35;
+    @JsonIgnore
+    protected int minHungerForHunt = 40;
+
     public Animal() {
         super();
         unitType = UnitType.ANIMAL;
         yearsAlive = 0;
-        hunger = ThreadLocalRandom.current().nextInt(30, 70);
+        hunger = ThreadLocalRandom.current().nextInt(minDefaultHunger, maxDefaultHunger);
         target = null;
         possibleTargets = new HashSet<UnitType>(Arrays.asList(UnitType.ANIMAL));
     }
@@ -61,7 +70,7 @@ public abstract class Animal extends Unit implements Serializable {
         // kill
         if (x.equals(target.getX()) && y.equals(target.getY())) {
             System.out.println("Kill on " + x + " " + y + "!");
-            hunger += 35;
+            hunger += hungerIncreaseValue;
             units.remove(target);
             target = null;
             return false;
@@ -92,22 +101,22 @@ public abstract class Animal extends Unit implements Serializable {
         }
     }
 
-    protected void tryHuntAndMove(Map map, Vector<Unit> units){
+    protected void tryHuntAndMove(Map map, Vector<Unit> units) {
         boolean huntResult = false;
-        if (hunger < 40) {
+        if (hunger < minHungerForHunt) {
             huntResult = hunt(units);
         }
         if (!huntResult) {
             double flip = Math.random();
             if (flip < 0.3) {
-                 // just sleep
+                // just sleep
             } else {
                 goToRandomDirection(map);
             }
         }
     }
 
-    protected void goToRandomDirection(Map map){
+    protected void goToRandomDirection(Map map) {
         int direction = ThreadLocalRandom.current().nextInt(1, 5);
         int tempX = x;
         int tempY = y;

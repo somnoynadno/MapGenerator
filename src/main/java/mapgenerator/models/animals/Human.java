@@ -9,7 +9,6 @@ import mapgenerator.models.UnitType;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Vector;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Human extends Animal {
 
@@ -18,7 +17,6 @@ public class Human extends Animal {
     private House house;
     @JsonIgnore
     private Human partner;
-    // TODO: add child
     @JsonIgnore
     private Human child;
 
@@ -30,7 +28,6 @@ public class Human extends Animal {
         house = null;
         partner = null;
         unitType = UnitType.HUMAN;
-        hunger = ThreadLocalRandom.current().nextInt(80, 100);
         possibleTargets = new HashSet<>(Arrays.asList(
                 UnitType.TREE,
                 UnitType.HERBIVORE,
@@ -56,6 +53,7 @@ public class Human extends Animal {
     public void move(Map map, Vector<Unit> units) {
         checkForDeath(units);
         tryBuildHouse(map);
+        tryMakeChild(units);
         tryHuntAndMove(map, units);
     }
 
@@ -92,6 +90,8 @@ public class Human extends Animal {
                     House h = new House(x, y);
                     map.addHouse(h);
                     house = h;
+
+                    System.out.println("House built on " + x + " " + y);
                 }
             }
         }
@@ -110,8 +110,25 @@ public class Human extends Animal {
                         partner.setHouse(house);
                     }
                     partner.setPartner(this);
+                    System.out.println("Partner found");
                     break;
                 }
+            }
+        }
+    }
+
+    protected void tryMakeChild(Vector<Unit> units){
+        if (partner != null && child == null) {
+            double flip = Math.random();
+            if (flip < (float) yearsAlive / 2000) {
+                child = new Human();
+                child.setX(x);
+                child.setY(y);
+
+                partner.setChild(child);
+                units.add(child);
+
+                System.out.println("Child added on " + x + " " + y);
             }
         }
     }
@@ -124,11 +141,19 @@ public class Human extends Animal {
         return partner;
     }
 
+    public Human getChild() {
+        return child;
+    }
+
     public void setHouse(House house) {
         this.house = house;
     }
 
     public void setPartner(Human partner) {
         this.partner = partner;
+    }
+
+    public void setChild(Human child) {
+        this.child = child;
     }
 }
