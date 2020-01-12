@@ -30,8 +30,12 @@ public class Human extends Animal {
         unitType = UnitType.HUMAN;
         possibleTargets = new HashSet<>(Arrays.asList(
                 UnitType.TREE,
-                UnitType.HERBIVORE,
-                UnitType.PREDATOR
+                UnitType.FOX,
+                UnitType.BEAR,
+                UnitType.GIRAFFE,
+                UnitType.PUMA,
+                UnitType.ZEBRA,
+                UnitType.RABBIT
         ));
     }
 

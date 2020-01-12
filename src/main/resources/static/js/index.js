@@ -30,14 +30,26 @@ function switchImageByID(tile, ID){
 
 function switchUnitByID(node, ID){
     switch (ID){
-        case "HERBIVORE":
-            node.setAttribute('src', 'static/img/herbivore.png');
+        case "PUMA":
+            node.setAttribute('src', 'static/img/puma.png');
             break;
-        case "PREDATOR":
-            node.setAttribute('src', 'static/img/predator.png');
+        case "ZEBRA":
+            node.setAttribute('src', 'static/img/zebra.png');
+            break;
+        case "FOX":
+            node.setAttribute('src', 'static/img/fox.png');
+            break;
+        case "RABBIT":
+            node.setAttribute('src', 'static/img/rabbit.png');
             break;
         case "HUMAN":
             node.setAttribute('src', 'static/img/human.png');
+            break;
+        case "GIRAFFE":
+            node.setAttribute('src', 'static/img/giraffe.png');
+            break;
+        case "BEAR":
+            node.setAttribute('src', 'static/img/bear.png');
             break;
         case "TREE":
             node.setAttribute('src', 'static/img/tree.png');

@@ -1,8 +1,6 @@
 package mapgenerator.models;
 
-import mapgenerator.models.animals.Herbivore;
-import mapgenerator.models.animals.Human;
-import mapgenerator.models.animals.Predator;
+import mapgenerator.models.animals.*;
 import mapgenerator.models.tiles.TileType;
 
 import java.io.Serializable;
@@ -44,16 +42,32 @@ public class Game implements Serializable {
     private void spawnAnimals() {
         for (int i = 0; i < animalNum; i++) {
             double flip = Math.random();
-            if (flip < 0.3) {
+            if (flip < 0.4) {
                 Tree u = new Tree();
                 giveCoordinates(u);
                 units.add(u);
-            } else if (flip < 0.6) {
-                Herbivore u = new Herbivore();
+            } else if (flip < 0.54) {
+                Rabbit u = new Rabbit();
                 giveCoordinates(u);
                 units.add(u);
-            } else if (flip < 0.8) {
-                Predator u = new Predator();
+            } else if (flip < 0.65) {
+                Zebra u = new Zebra();
+                giveCoordinates(u);
+                units.add(u);
+            } else if (flip < 0.76) {
+                Giraffe u = new Giraffe();
+                giveCoordinates(u);
+                units.add(u);
+            } else if (flip < 0.86) {
+                Fox u = new Fox();
+                giveCoordinates(u);
+                units.add(u);
+            } else if (flip < 0.92) {
+                Puma u = new Puma();
+                giveCoordinates(u);
+                units.add(u);
+            } else if (flip < 0.96) {
+                Bear u = new Bear();
                 giveCoordinates(u);
                 units.add(u);
             } else {

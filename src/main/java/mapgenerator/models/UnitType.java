@@ -7,5 +7,11 @@ public enum UnitType {
     ANIMAL,
     HERBIVORE,
     HUMAN,
-    PREDATOR
+    PREDATOR,
+    BEAR,
+    FOX,
+    PUMA,
+    GIRAFFE,
+    RABBIT,
+    ZEBRA
 }

@@ -19,7 +19,7 @@ public abstract class Animal extends Unit implements Serializable {
     @JsonIgnore
     protected Unit target;
     @JsonIgnore
-    protected final Integer huntRadius = 18;
+    protected Integer huntRadius = 18;
     @JsonIgnore
     protected int yearsAlive;
     @JsonIgnore
