@@ -30,8 +30,6 @@ public abstract class Animal extends Unit implements Serializable {
     @JsonIgnore
     protected int maxDefaultHunger = 120;
     @JsonIgnore
-    protected int hungerIncreaseValue = 35;
-    @JsonIgnore
     protected int minHungerForHunt = 40;
 
     @JsonIgnore
@@ -75,7 +73,7 @@ public abstract class Animal extends Unit implements Serializable {
         // kill
         if (x.equals(target.getX()) && y.equals(target.getY())) {
             System.out.println("Kill on " + x + " " + y + "!");
-            hunger += hungerIncreaseValue;
+            hunger += target.getNutritionalValue();
             units.remove(target);
             target = null;
             return false;

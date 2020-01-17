@@ -18,6 +18,6 @@ public class Bear extends Predator {
         ));
 
         huntRadius = 22;
-        hungerIncreaseValue = 45;
+        nutritionalValue = 100;
     }
 }

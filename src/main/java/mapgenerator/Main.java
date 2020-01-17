@@ -38,6 +38,14 @@ public class Main {
             return json;
         });
 
+        get("/api/v1/houses/", (req, res) -> {
+            ObjectMapper ow = new ObjectMapper();
+            res.header("Content-Type", "application/json");
+            String json = ow.writeValueAsString(game.getMap().getHouses());
+
+            return json;
+        });
+
         get("/api/v1/info/", (req, res) -> {
             Integer x = Integer.parseInt(req.queryMap().value("x"));
             Integer y = Integer.parseInt(req.queryMap().value("y"));

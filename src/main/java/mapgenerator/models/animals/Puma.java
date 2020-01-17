@@ -17,6 +17,6 @@ public class Puma extends Predator {
                 UnitType.GIRAFFE
         ));
 
-        hungerIncreaseValue = 30;
+        nutritionalValue = 50;
     }
 }

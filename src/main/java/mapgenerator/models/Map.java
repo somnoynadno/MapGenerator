@@ -26,14 +26,8 @@ public class Map implements Serializable {
         for (int i = 0; i < width; i++) {
             Vector<Tile> r = new Vector<>();
             for (int j = 0; j < height; j++) {
-                double flip = Math.random();
-                if (flip < (0.7 + (float) temperature / 100)) {
-                    SteppeTile t = new SteppeTile();
-                    r.add(t);
-                } else {
-                    GreenTile t = new GreenTile();
-                    r.add(t);
-                }
+                SteppeTile t = new SteppeTile();
+                r.add(t);
             }
             tiles.add(r);
         }

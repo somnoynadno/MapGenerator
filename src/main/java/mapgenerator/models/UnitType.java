@@ -3,6 +3,7 @@ package mapgenerator.models;
 public enum UnitType {
     UNIT,
     TREE,
+    GRASS,
     HOUSE,
     ANIMAL,
     HERBIVORE,

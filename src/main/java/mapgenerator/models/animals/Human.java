@@ -12,7 +12,6 @@ import java.util.Vector;
 
 public class Human extends Animal {
 
-    // TODO: add go home method
     @JsonIgnore
     private House house;
     @JsonIgnore

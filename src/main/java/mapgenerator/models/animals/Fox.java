@@ -14,5 +14,6 @@ public class Fox extends Predator {
                 UnitType.ZEBRA,
                 UnitType.RABBIT
         ));
+        nutritionalValue = 40;
     }
 }

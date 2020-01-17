@@ -15,11 +15,12 @@ public class Game implements Serializable {
     public Game() {
         map = new Map(180, 180);
         animalNum = map.getHeight() * 4;
-        units = new Vector<Unit>();
+        units = new Vector<>();
     }
 
     public void run() {
         spawnAnimals();
+        addExtraGreen();
         System.out.println("Game started");
         for (int seconds = 0; seconds != 1000; seconds++) {
             System.out.println(seconds + " seconds");
@@ -30,6 +31,7 @@ public class Game implements Serializable {
             }
 
             spawnTree();
+            spawnGrass();
 
             try {
                 Thread.sleep(1000);
@@ -42,7 +44,11 @@ public class Game implements Serializable {
     private void spawnAnimals() {
         for (int i = 0; i < animalNum; i++) {
             double flip = Math.random();
-            if (flip < 0.4) {
+            if (flip < 0.3) {
+                Grass u = new Grass();
+                giveCoordinates(u);
+                units.add(u);
+            } else if (flip < 0.42) {
                 Tree u = new Tree();
                 giveCoordinates(u);
                 units.add(u);
@@ -78,6 +84,14 @@ public class Game implements Serializable {
         }
     }
 
+    private void addExtraGreen() {
+        for (int i = 0; i < animalNum*2; i++) {
+            Grass u = new Grass();
+            giveCoordinates(u);
+            units.add(u);
+        }
+    }
+
     private void giveCoordinates(Unit unit) {
         boolean flag = true;
         while (flag) {
@@ -105,8 +119,17 @@ public class Game implements Serializable {
 
     public void spawnTree() {
         double flip = Math.random();
-        if (flip < 0.7) {
+        if (flip < 0.3) {
             Tree u = new Tree();
+            giveCoordinates(u);
+            units.add(u);
+        }
+    }
+
+    public void spawnGrass() {
+        double flip = Math.random();
+        if (flip < 0.8) {
+            Grass u = new Grass();
             giveCoordinates(u);
             units.add(u);
         }

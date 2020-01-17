@@ -15,19 +15,11 @@ function switchImageByID(tile, ID){
         case "STEPPE":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_desert_flat_01.png');
             break;
-        case "GREEN":
-            tile.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
-            break;
-        case "WATER":
-            tile.setAttribute('src', 'static/tiles/grid/hexset_grid_wdeep_flat_01.png');
-            break;
-        case "STONE":
-            tile.setAttribute('src', 'static/tiles/grid/hexset_grid_stone1_hill_01.png');
-            break;
     }
 }
 
-function switchUnitByID(node, ID){
+function switchUnitByID(node, unit){
+    let ID = unit.unitType;
     switch (ID){
         case "PUMA":
             node.setAttribute('src', 'static/img/puma.png');
@@ -53,6 +45,24 @@ function switchUnitByID(node, ID){
         case "TREE":
             node.setAttribute('src', 'static/img/tree.png');
             break;
+        case "GRASS":
+            node.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
+            break;
+    }
+}
+
+function drawHouse(x, y){
+    let map = document.getElementById("map");
+
+    for (let j = y-1; j <= y+1; j++){
+        for (let i = x-1; i <= x+1; i++){
+            try {
+                let node = map.childNodes[j].childNodes[i];
+                node.setAttribute('src', 'static/tiles/grid/hexset_grid_stone1_hill_01.png');
+            } catch (e) {
+                console.log(e.message);
+            }
+        }
     }
 }
 
@@ -81,21 +91,21 @@ async function constructMap(){
             img.setAttribute('X', j);
             img.setAttribute('Y', i);
 
-//            img.addEventListener('click', function(){
-//                for (let unit of units){
-//                    if (unit.x == j && unit.y == i){
-//                        console.log(unit);
-//                        switchUnitByID(document.getElementById("unit-img"), unit.unitType)
-//                        document.getElementById("unit-name").innerText = unit.unitType
-//                        document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
-//                        if (unit.hunger){
-//                            document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
-//                        } else document.getElementById("unit-hunger").innerText = ''
-//                        return;
-//                    }
-//                }
-//                console.log("No unit on position")
-//            });
+            img.addEventListener('click', function(){
+                for (let unit of units){
+                    if (unit.x == j && unit.y == i){
+                        console.log(unit);
+                        switchUnitByID(document.getElementById("unit-img"), unit.unitType)
+                        document.getElementById("unit-name").innerText = unit.unitType
+                        document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
+                        if (unit.hunger){
+                            document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
+                        } else document.getElementById("unit-hunger").innerText = ''
+                        return;
+                    }
+                }
+                console.log("No unit on position")
+            });
 
             row.appendChild(img);
         }
@@ -110,15 +120,6 @@ async function updateUnits(){
     units = await response.json();
 
     console.log("Units fetched");
-
-    let map = document.getElementById("map");
-
-//    for (let i = 0; i < h; i++){
-//        for (let j = 0; j < w; j++){
-//            let tile = map.childNodes[i].childNodes[j];
-//            switchImageByID(tile, tiles[i][j].tileType);
-//        }
-//    }
 
     let node;
     for (let unit of prevUnits){
@@ -138,7 +139,16 @@ async function updateUnits(){
             console.log(e.message);
         }
         if (node == undefined) continue;
-        switchUnitByID(node, unit.unitType);
+        switchUnitByID(node, unit);
+    }
+}
+
+async function updateHouses(){
+    let response = await fetch('http://localhost:4567/api/v1/houses/');
+    let houses = await response.json();
+
+    for (let house of houses) {
+        drawHouse(house.x, house.y);
     }
 }
 
@@ -149,9 +159,10 @@ async function updateTime(){
 
 document.addEventListener('DOMContentLoaded', async function () {
     constructMap();
-    await sleep(5000);
+    await sleep(2000);
 
-    setInterval(constructMap, 20000);
+    setInterval(constructMap, 40000)
+    setInterval(updateHouses, 2000);
     setInterval(updateUnits, 500);
     setInterval(updateTime, 1000);
 });

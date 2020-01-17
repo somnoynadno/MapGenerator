@@ -10,6 +10,6 @@ abstract public class Herbivore extends Animal {
     public Herbivore() {
         super();
         unitType = UnitType.HERBIVORE;
-        possibleTargets = new HashSet<>(Arrays.asList(UnitType.TREE));
+        possibleTargets = new HashSet<>(Arrays.asList(UnitType.TREE, UnitType.GRASS));
     }
 }

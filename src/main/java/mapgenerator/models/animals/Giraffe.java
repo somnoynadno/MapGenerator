@@ -9,5 +9,6 @@ public class Giraffe extends Herbivore {
         unitType = UnitType.GIRAFFE;
 
         huntRadius = 24;
+        nutritionalValue = 80;
     }
 }
