@@ -21,8 +21,11 @@ public class Game implements Serializable {
     }
 
     public void run() {
-        spawnAnimals();
+        for (int i = 0; i < animalNum; i++) {
+            spawnRandomUnit();
+        }
         addExtraGreen();
+
         System.out.println("Game started");
         for (int seconds = 0; seconds != 1000; seconds++) {
             System.out.println(seconds + " seconds");
@@ -32,57 +35,55 @@ public class Game implements Serializable {
                 units.get(i).move(map, units);
             }
 
-            spawnTree();
-            spawnGrass();
+            spawnRandomUnit();
+            spawnHerb();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void spawnAnimals() {
-        for (int i = 0; i < animalNum; i++) {
-            double flip = Math.random();
-            if (flip < 0.3) {
-                Grass u = new Grass();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.42) {
-                Tree u = new Tree();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.54) {
-                Rabbit u = new Rabbit();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.65) {
-                Zebra u = new Zebra();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.76) {
-                Giraffe u = new Giraffe();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.86) {
-                Fox u = new Fox();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.92) {
-                Puma u = new Puma();
-                giveCoordinates(u);
-                units.add(u);
-            } else if (flip < 0.96) {
-                Bear u = new Bear();
-                giveCoordinates(u);
-                units.add(u);
-            } else {
-                Human u = new Human();
-                giveCoordinates(u);
-                units.add(u);
-            }
+    private void spawnRandomUnit() {
+        double flip = Math.random();
+        if (flip < 0.3) {
+            Grass u = new Grass();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.42) {
+            Tree u = new Tree();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.60) {
+            Rabbit u = new Rabbit();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.70) {
+            Zebra u = new Zebra();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.80) {
+            Giraffe u = new Giraffe();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.88) {
+            Fox u = new Fox();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.93) {
+            Puma u = new Puma();
+            giveCoordinates(u);
+            units.add(u);
+        } else if (flip < 0.97) {
+            Bear u = new Bear();
+            giveCoordinates(u);
+            units.add(u);
+        } else {
+            Human u = new Human();
+            giveCoordinates(u);
+            units.add(u);
         }
     }
 
@@ -119,21 +120,20 @@ public class Game implements Serializable {
         }
     }
 
-    public void spawnTree() {
+    public void spawnHerb() {
         double flip = Math.random();
-        if (flip < 0.3) {
-            Tree u = new Tree();
-            giveCoordinates(u);
-            units.add(u);
-        }
-    }
-
-    public void spawnGrass() {
-        double flip = Math.random();
-        if (flip < 0.8) {
-            Grass u = new Grass();
-            giveCoordinates(u);
-            units.add(u);
+        // depends on temperature
+        if ((double)map.getTemperature()/100 < flip) {
+            flip = Math.random();
+            if (flip < 0.3) {
+                Tree u = new Tree();
+                giveCoordinates(u);
+                units.add(u);
+            } else {
+                Grass u = new Grass();
+                giveCoordinates(u);
+                units.add(u);
+            }
         }
     }
 

@@ -159,10 +159,10 @@ async function updateTime(){
 
 document.addEventListener('DOMContentLoaded', async function () {
     constructMap();
-    await sleep(2000);
+    await sleep(1000);
 
     setInterval(constructMap, 40000)
     setInterval(updateHouses, 2000);
-    setInterval(updateUnits, 500);
+    setInterval(updateUnits, 800);
     setInterval(updateTime, 1000);
 });
