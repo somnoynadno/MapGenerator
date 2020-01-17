@@ -1,6 +1,8 @@
 package mapgenerator.models;
 
 import mapgenerator.models.animals.*;
+import mapgenerator.models.herbs.Grass;
+import mapgenerator.models.herbs.Tree;
 import mapgenerator.models.tiles.TileType;
 
 import java.io.Serializable;

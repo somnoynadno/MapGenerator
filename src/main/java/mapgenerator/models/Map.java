@@ -1,5 +1,6 @@
 package mapgenerator.models;
 
+import mapgenerator.models.houses.House;
 import mapgenerator.models.tiles.*;
 
 import java.io.Serializable;

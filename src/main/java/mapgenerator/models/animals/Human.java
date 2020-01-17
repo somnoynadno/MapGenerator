@@ -1,7 +1,7 @@
 package mapgenerator.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import mapgenerator.models.House;
+import mapgenerator.models.houses.House;
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
 import mapgenerator.models.UnitType;

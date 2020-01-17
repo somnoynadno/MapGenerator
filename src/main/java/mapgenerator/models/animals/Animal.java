@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Animal extends Unit implements Serializable {
+public abstract class Animal extends Unit {
 
     protected Integer hunger;
     @JsonIgnore
