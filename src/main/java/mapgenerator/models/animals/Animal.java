@@ -34,6 +34,11 @@ public abstract class Animal extends Unit implements Serializable {
     @JsonIgnore
     protected int minHungerForHunt = 40;
 
+    @JsonIgnore
+    protected int ms = 1; // move speed
+    @JsonIgnore
+    protected double stepSleepProbability = 0.3;
+
     public Animal() {
         super();
         unitType = UnitType.ANIMAL;
@@ -55,16 +60,16 @@ public abstract class Animal extends Unit implements Serializable {
         }
         // hunt
         if (target.getX() > x) {
-            x += 1;
+            x += ms;
         }
         if (target.getY() > y) {
-            y += 1;
+            y += ms;
         }
         if (target.getX() < x) {
-            x -= 1;
+            x -= ms;
         }
         if (target.getY() < y) {
-            y -= 1;
+            y -= ms;
         }
 
         // kill
@@ -108,7 +113,7 @@ public abstract class Animal extends Unit implements Serializable {
         }
         if (!huntResult) {
             double flip = Math.random();
-            if (flip < 0.3) {
+            if (flip < stepSleepProbability) {
                 // just sleep
             } else {
                 goToRandomDirection(map);
@@ -123,13 +128,13 @@ public abstract class Animal extends Unit implements Serializable {
 
         switch (direction) {
             case 1:
-                tempX += 1;
+                tempX += ms;
             case 2:
-                tempX -= 1;
+                tempX -= ms;
             case 3:
-                tempY += 1;
+                tempY += ms;
             case 4:
-                tempY -= 1;
+                tempY -= ms;
         }
         // check constraints
         if (tempX >= 0 && tempX < map.getWidth()

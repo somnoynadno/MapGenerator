@@ -11,7 +11,6 @@ function sleep(ms) {
 }
 
 function switchImageByID(tile, ID){
-    tile.setAttribute('tileid', ID);
     switch (ID){
         case "STEPPE":
             tile.setAttribute('src', 'static/tiles/grid/hexset_grid_desert_flat_01.png');
@@ -82,21 +81,21 @@ async function constructMap(){
             img.setAttribute('X', j);
             img.setAttribute('Y', i);
 
-            img.addEventListener('click', function(){
-                for (let unit of units){
-                    if (unit.x == j && unit.y == i){
-                        console.log(unit);
-                        switchUnitByID(document.getElementById("unit-img"), unit.unitType)
-                        document.getElementById("unit-name").innerText = unit.unitType
-                        document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
-                        if (unit.hunger){
-                            document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
-                        } else document.getElementById("unit-hunger").innerText = ''
-                        return;
-                    }
-                }
-                console.log("No unit on position")
-            });
+//            img.addEventListener('click', function(){
+//                for (let unit of units){
+//                    if (unit.x == j && unit.y == i){
+//                        console.log(unit);
+//                        switchUnitByID(document.getElementById("unit-img"), unit.unitType)
+//                        document.getElementById("unit-name").innerText = unit.unitType
+//                        document.getElementById("unit-coords").innerText = '(' + unit.x + "; " + unit.y + ')';
+//                        if (unit.hunger){
+//                            document.getElementById("unit-hunger").innerText = "Hunger: " + unit.hunger;
+//                        } else document.getElementById("unit-hunger").innerText = ''
+//                        return;
+//                    }
+//                }
+//                console.log("No unit on position")
+//            });
 
             row.appendChild(img);
         }
@@ -105,19 +104,33 @@ async function constructMap(){
 }
 
 async function updateUnits(){
+    let prevUnits = units;
+
     let response = await fetch('http://localhost:4567/api/v1/units/');
     units = await response.json();
 
+    console.log("Units fetched");
+
     let map = document.getElementById("map");
 
-    for (let i = 0; i < h; i++){
-        for (let j = 0; j < w; j++){
-            let tile = map.childNodes[i].childNodes[j];
-            switchImageByID(tile, tiles[i][j].tileType);
-        }
-    }
+//    for (let i = 0; i < h; i++){
+//        for (let j = 0; j < w; j++){
+//            let tile = map.childNodes[i].childNodes[j];
+//            switchImageByID(tile, tiles[i][j].tileType);
+//        }
+//    }
 
     let node;
+    for (let unit of prevUnits){
+        try {
+            node = map.childNodes[unit.y].childNodes[unit.x];
+        } catch (e){
+            console.log(e.message);
+        }
+        if (node == undefined) continue;
+        switchImageByID(node, "STEPPE");
+    }
+
     for (let unit of units){
         try {
             node = map.childNodes[unit.y].childNodes[unit.x];
@@ -138,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     constructMap();
     await sleep(5000);
 
-    setInterval(constructMap, 10000);
-    setInterval(updateUnits, 250);
+    setInterval(constructMap, 20000);
+    setInterval(updateUnits, 500);
     setInterval(updateTime, 1000);
 });

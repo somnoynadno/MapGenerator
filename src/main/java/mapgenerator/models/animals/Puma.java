@@ -9,11 +9,14 @@ public class Puma extends Predator {
 
     public Puma(){
         unitType = UnitType.PUMA;
+        ms = 2;
         possibleTargets = new HashSet<>(Arrays.asList(
                 UnitType.ZEBRA,
                 UnitType.RABBIT,
                 UnitType.FOX,
                 UnitType.GIRAFFE
         ));
+
+        hungerIncreaseValue = 30;
     }
 }
