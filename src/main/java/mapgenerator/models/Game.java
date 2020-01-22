@@ -18,6 +18,10 @@ public class Game implements Serializable {
 
     @JsonIgnore
     private int populationControlThreshold = 1400;
+    @JsonIgnore
+    private int maxGameTime = 1000;
+    @JsonIgnore
+    private int sleepTime = 500;
 
     public Game() {
         map = new Map(180, 180);
@@ -32,7 +36,7 @@ public class Game implements Serializable {
         addExtraGreen();
 
         System.out.println("Game started");
-        for (int seconds = 0; seconds != 1000; seconds++) {
+        for (int seconds = 0; seconds != maxGameTime; seconds++) {
             System.out.println(seconds + " seconds");
             System.out.println(units.size() + " units left");
 
@@ -51,7 +55,7 @@ public class Game implements Serializable {
             }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

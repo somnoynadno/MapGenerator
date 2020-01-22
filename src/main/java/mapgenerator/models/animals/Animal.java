@@ -43,6 +43,8 @@ public abstract class Animal extends Unit {
 
     @JsonIgnore
     protected int partnerSearchRadius = 10;
+    @JsonIgnore
+    protected double addPartnerProbability = 0.3;
 
     public Animal() {
         super();
@@ -63,8 +65,17 @@ public abstract class Animal extends Unit {
         if (target == null) {
             searchForTarget(units);
             if (target == null) return false;
+        } else {
+            huntForTarget();
+            if (x.equals(target.getX()) && y.equals(target.getY())) {
+                killTarget(units);
+                return false;
+            }
         }
-        // hunt
+        return true;
+    }
+
+    protected void huntForTarget() {
         if (target.getX() > x) {
             x += ms;
         }
@@ -77,19 +88,16 @@ public abstract class Animal extends Unit {
         if (target.getY() < y) {
             y -= ms;
         }
-
-        // kill
-        if (x.equals(target.getX()) && y.equals(target.getY())) {
-            System.out.println("Kill on " + x + " " + y + "!");
-            hunger += target.getNutritionalValue();
-            units.remove(target);
-            target = null;
-            return false;
-        }
-        return true;
     }
 
-    public void searchForTarget(Vector<Unit> units) {
+    protected void killTarget(Vector<Unit> units) {
+        System.out.println("Kill on " + x + " " + y + "!");
+        hunger += target.getNutritionalValue();
+        units.remove(target);
+        target = null;
+    }
+
+    protected void searchForTarget(Vector<Unit> units) {
         for (int i = 0; i < units.size(); i++) {
             Unit unit = units.get(i);
             if (possibleTargets.contains(unit.getUnitType())
@@ -102,7 +110,7 @@ public abstract class Animal extends Unit {
         }
     }
 
-    public void checkForDeath(Vector<Unit> units) {
+    protected void checkForDeath(Vector<Unit> units) {
         hunger -= 1;
         yearsAlive += 1;
         if (hunger <= 0) {
@@ -119,7 +127,7 @@ public abstract class Animal extends Unit {
         }
         if (!huntResult) {
             double flip = Math.random();
-            if (flip < 0.3) {
+            if (flip < addPartnerProbability) {
                 if (partner == null)
                     searchForPartner(units);
             } else {
