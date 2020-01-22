@@ -6,7 +6,6 @@ import mapgenerator.models.Unit;
 import mapgenerator.models.UnitType;
 import mapgenerator.models.tiles.TileType;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,17 +36,26 @@ public abstract class Animal extends Unit {
     @JsonIgnore
     protected double stepSleepProbability = 0.3;
 
+    @JsonIgnore
+    protected Animal partner;
+    @JsonIgnore
+    protected Animal child;
+
+    @JsonIgnore
+    protected int partnerSearchRadius = 10;
+
     public Animal() {
         super();
         unitType = UnitType.ANIMAL;
         yearsAlive = 0;
         hunger = ThreadLocalRandom.current().nextInt(minDefaultHunger, maxDefaultHunger);
         target = null;
-        possibleTargets = new HashSet<UnitType>(Arrays.asList(UnitType.ANIMAL));
+        possibleTargets = new HashSet<>(Arrays.asList(UnitType.ANIMAL));
     }
 
     public void move(Map map, Vector<Unit> units) {
         checkForDeath(units);
+        tryMakeChild(units);
         tryHuntAndMove(map, units);
     }
 
@@ -111,8 +119,9 @@ public abstract class Animal extends Unit {
         }
         if (!huntResult) {
             double flip = Math.random();
-            if (flip < stepSleepProbability) {
-                // just sleep
+            if (flip < 0.3) {
+                if (partner == null)
+                    searchForPartner(units);
             } else {
                 goToRandomDirection(map);
             }
@@ -144,8 +153,62 @@ public abstract class Animal extends Unit {
         } // else just exit
     }
 
+    protected void tryMakeChild(Vector<Unit> units){
+        if (partner != null && child == null) {
+            double flip = Math.random();
+            if (flip < (float) yearsAlive / 2000) {
+                try {
+                    child = getClass().newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                child.setX(x);
+                child.setY(y);
+
+                partner.setChild(child);
+                units.add(child);
+
+                System.out.println("Child of " + getClass().getName() + " added on " + x + " " + y);
+            }
+        }
+    }
+
+    protected void searchForPartner(Vector<Unit> units) {
+        for (int i = 0; i < units.size(); i++) {
+            Unit unit = units.get(i);
+            if (unit.getUnitType() == this.unitType
+                    && unit != this
+                    && Math.abs(unit.getX() - x) <= partnerSearchRadius
+                    && Math.abs(unit.getY() - y) <= partnerSearchRadius) {
+                if (((Animal) unit).getPartner() == null) {
+                    partner = (Animal) unit;
+                    partner.setPartner(this);
+                    System.out.println("Partner found for " + getClass().getName());
+                    break;
+                }
+            }
+        }
+    }
+
+
     public Integer getHunger() {
         return hunger;
+    }
+
+    public Animal getPartner() {
+        return partner;
+    }
+
+    public Animal getChild() {
+        return child;
+    }
+
+    public void setPartner(Animal partner) {
+        this.partner = partner;
+    }
+
+    public void setChild(Animal child) {
+        this.child = child;
     }
 }
 

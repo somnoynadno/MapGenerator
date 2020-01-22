@@ -14,13 +14,6 @@ public class Human extends Animal {
 
     @JsonIgnore
     private House house;
-    @JsonIgnore
-    private Human partner;
-    @JsonIgnore
-    private Human child;
-
-    @JsonIgnore
-    private int partnerSearchRadius = 10;
 
     public Human() {
         super();
@@ -100,63 +93,12 @@ public class Human extends Animal {
         }
     }
 
-    protected void searchForPartner(Vector<Unit> units) {
-        for (int i = 0; i < units.size(); i++) {
-            Unit unit = units.get(i);
-            if (unit.getUnitType() == UnitType.HUMAN
-                    && unit != this
-                    && Math.abs(unit.getX() - x) <= partnerSearchRadius
-                    && Math.abs(unit.getY() - y) <= partnerSearchRadius) {
-                if (((Human) unit).getPartner() == null) {
-                    partner = (Human) unit;
-                    if (partner.getHouse() == null) {
-                        partner.setHouse(house);
-                    }
-                    partner.setPartner(this);
-                    System.out.println("Partner found");
-                    break;
-                }
-            }
-        }
-    }
-
-    protected void tryMakeChild(Vector<Unit> units){
-        if (partner != null && child == null) {
-            double flip = Math.random();
-            if (flip < (float) yearsAlive / 2000) {
-                child = new Human();
-                child.setX(x);
-                child.setY(y);
-
-                partner.setChild(child);
-                units.add(child);
-
-                System.out.println("Child added on " + x + " " + y);
-            }
-        }
-    }
-
     public House getHouse() {
         return house;
-    }
-
-    public Human getPartner() {
-        return partner;
-    }
-
-    public Human getChild() {
-        return child;
     }
 
     public void setHouse(House house) {
         this.house = house;
     }
 
-    public void setPartner(Human partner) {
-        this.partner = partner;
-    }
-
-    public void setChild(Human child) {
-        this.child = child;
-    }
 }

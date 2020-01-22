@@ -72,11 +72,11 @@ public class Game implements Serializable {
             Fox u = new Fox();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.93) {
+        } else if (flip < 0.94) {
             Puma u = new Puma();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.97) {
+        } else if (flip < 0.98) {
             Bear u = new Bear();
             giveCoordinates(u);
             units.add(u);
