@@ -1,6 +1,7 @@
 package mapgenerator.models.animals;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import mapgenerator.models.houses.Farm;
 import mapgenerator.models.houses.House;
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
@@ -15,12 +16,16 @@ public class Human extends Animal {
     @JsonIgnore
     private House house;
 
+    @JsonIgnore
+    private double farmBuildProbability = 0.12;
+
     public Human() {
         super();
         house = null;
         partner = null;
         unitType = UnitType.HUMAN;
         possibleTargets = new HashSet<>(Arrays.asList(
+                UnitType.WHEAT,
                 UnitType.TREE,
                 UnitType.FOX,
                 UnitType.BEAR,
@@ -82,12 +87,21 @@ public class Human extends Animal {
                     }
                 }
                 if (freeSpace) {
-                    // build house
-                    House h = new House(x, y);
-                    map.addHouse(h);
-                    house = h;
+                    // build house or farm
+                    flip = Math.random();
+                    if (flip <= farmBuildProbability){
+                        Farm f = new Farm(x, y);
+                        map.addHouse(f);
+                        house = f;
 
-                    System.out.println("House built on " + x + " " + y);
+                        System.out.println("Farm built on " + x + " " + y);
+                    } else {
+                        House h = new House(x, y);
+                        map.addHouse(h);
+                        house = h;
+
+                        System.out.println("House built on " + x + " " + y);
+                    }
                 }
             }
         }

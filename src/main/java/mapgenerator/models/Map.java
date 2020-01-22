@@ -55,11 +55,11 @@ public class Map implements Serializable {
     }
 
     public void addHouse(House house) {
-        int x = house.getX() - 1;
-        int y = house.getY() - 1;
+        int x = house.getX() - house.getHouseSize()/2;
+        int y = house.getY() - house.getHouseSize()/2;
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < house.getHouseSize(); i++) {
+            for (int j = 0; j < house.getHouseSize(); j++) {
                 try {
                     Tile t = new StoneTile();
                     tiles.get(y + j).set(x + i, t);

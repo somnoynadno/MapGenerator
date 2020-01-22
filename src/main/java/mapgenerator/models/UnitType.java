@@ -5,6 +5,7 @@ public enum UnitType {
     HERB,
     TREE,
     GRASS,
+    WHEAT,
     HOUSE,
     FARM,
     ANIMAL,

@@ -21,6 +21,9 @@ function switchImageByID(tile, ID){
 function switchUnitByID(node, unit){
     let ID = unit.unitType;
     switch (ID){
+        case "GRASS":
+            node.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
+            break;
         case "PUMA":
             node.setAttribute('src', 'static/img/puma.png');
             break;
@@ -45,17 +48,28 @@ function switchUnitByID(node, unit){
         case "TREE":
             node.setAttribute('src', 'static/img/tree.png');
             break;
-        case "GRASS":
-            node.setAttribute('src', 'static/tiles/grid/hexset_grid_boreal_flat_01.png');
+        case "WHEAT":
+            node.setAttribute('src', 'static/img/wheat.png');
             break;
     }
 }
 
-function drawHouse(x, y){
+function drawHouse(house){
     let map = document.getElementById("map");
 
-    for (let j = y-1; j <= y+1; j++){
-        for (let i = x-1; i <= x+1; i++){
+    let x = house.x;
+    let y = house.y;
+
+    let hs = 1;
+
+    if (house.unitType == "HOUSE") {
+        hs = 1;
+    } else if (house.unitType == "FARM") {
+        hs = 2;
+    }
+
+    for (let j = y-hs; j <= y+hs; j++){
+        for (let i = x-hs; i <= x+hs; i++){
             try {
                 let node = map.childNodes[j].childNodes[i];
                 node.setAttribute('src', 'static/tiles/grid/hexset_grid_stone1_hill_01.png');
@@ -148,7 +162,7 @@ async function updateHouses(){
     let houses = await response.json();
 
     for (let house of houses) {
-        drawHouse(house.x, house.y);
+        drawHouse(house);
     }
 }
 
@@ -161,7 +175,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     constructMap();
     await sleep(1000);
 
-    setInterval(constructMap, 40000)
+//    setInterval(constructMap, 40000)
     setInterval(updateHouses, 2000);
     setInterval(updateUnits, 800);
     setInterval(updateTime, 1000);

@@ -29,4 +29,8 @@ public class House extends Unit {
         }
         return check;
     }
+
+    public Integer getHouseSize() {
+        return houseSize;
+    }
 }

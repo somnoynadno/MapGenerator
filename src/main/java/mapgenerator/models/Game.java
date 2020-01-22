@@ -3,6 +3,7 @@ package mapgenerator.models;
 import mapgenerator.models.animals.*;
 import mapgenerator.models.herbs.Grass;
 import mapgenerator.models.herbs.Tree;
+import mapgenerator.models.houses.House;
 import mapgenerator.models.tiles.TileType;
 
 import java.io.Serializable;
@@ -35,8 +36,15 @@ public class Game implements Serializable {
                 units.get(i).move(map, units);
             }
 
-            spawnRandomUnit();
-            spawnHerb();
+            for (House house : map.getHouses()){
+                house.move(map, units);
+            }
+
+            // population control
+            if (units.size() < 1500) {
+                spawnRandomUnit();
+                spawnHerb();
+            }
 
             try {
                 Thread.sleep(500);
@@ -52,31 +60,31 @@ public class Game implements Serializable {
             Grass u = new Grass();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.42) {
+        } else if (flip < 0.43) {
             Tree u = new Tree();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.60) {
+        } else if (flip < 0.62) {
             Rabbit u = new Rabbit();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.70) {
+        } else if (flip < 0.72) {
             Zebra u = new Zebra();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.80) {
+        } else if (flip < 0.83) {
             Giraffe u = new Giraffe();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.88) {
+        } else if (flip < 0.91) {
             Fox u = new Fox();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.94) {
+        } else if (flip < 0.97) {
             Puma u = new Puma();
             giveCoordinates(u);
             units.add(u);
-        } else if (flip < 0.98) {
+        } else if (flip < 0.99) {
             Bear u = new Bear();
             giveCoordinates(u);
             units.add(u);
