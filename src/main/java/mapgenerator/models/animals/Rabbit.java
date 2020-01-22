@@ -12,6 +12,6 @@ public class Rabbit extends Herbivore {
         huntRadius = 8;
         unitType = UnitType.RABBIT;
         nutritionalValue = 15;
-        possibleTargets = new HashSet<>(Arrays.asList(UnitType.GRASS));
+        possibleTargets = new HashSet<>(Arrays.asList(UnitType.GRASS, UnitType.WHEAT));
     }
 }

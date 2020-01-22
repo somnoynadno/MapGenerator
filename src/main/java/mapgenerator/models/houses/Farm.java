@@ -1,5 +1,6 @@
 package mapgenerator.models.houses;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mapgenerator.models.Map;
 import mapgenerator.models.Unit;
 import mapgenerator.models.UnitType;
@@ -10,7 +11,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Farm extends House implements IFarm {
 
+    @JsonIgnore
     private final int cooldown = 10;
+    @JsonIgnore
     private int i = 0;
 
     public Farm() {

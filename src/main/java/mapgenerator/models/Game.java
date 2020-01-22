@@ -1,5 +1,6 @@
 package mapgenerator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mapgenerator.models.animals.*;
 import mapgenerator.models.herbs.Grass;
 import mapgenerator.models.herbs.Tree;
@@ -12,17 +13,20 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game implements Serializable {
     private Map map;
-    private Integer animalNum;
+    private Integer defaultUnitsNum;
     private Vector<Unit> units;
+
+    @JsonIgnore
+    private int populationControlThreshold = 1400;
 
     public Game() {
         map = new Map(180, 180);
-        animalNum = map.getHeight() * 4;
+        defaultUnitsNum = map.getHeight() * 4;
         units = new Vector<>();
     }
 
     public void run() {
-        for (int i = 0; i < animalNum; i++) {
+        for (int i = 0; i < defaultUnitsNum; i++) {
             spawnRandomUnit();
         }
         addExtraGreen();
@@ -41,7 +45,7 @@ public class Game implements Serializable {
             }
 
             // population control
-            if (units.size() < 1500) {
+            if (units.size() < populationControlThreshold) {
                 spawnRandomUnit();
                 spawnHerb();
             }
@@ -96,7 +100,7 @@ public class Game implements Serializable {
     }
 
     private void addExtraGreen() {
-        for (int i = 0; i < animalNum*2; i++) {
+        for (int i = 0; i < defaultUnitsNum *2; i++) {
             Grass u = new Grass();
             giveCoordinates(u);
             units.add(u);
@@ -149,8 +153,8 @@ public class Game implements Serializable {
         return map;
     }
 
-    public Integer getAnimalNum() {
-        return animalNum;
+    public Integer getDefaultUnitsNum() {
+        return defaultUnitsNum;
     }
 
     public Vector<Unit> getUnits() {
