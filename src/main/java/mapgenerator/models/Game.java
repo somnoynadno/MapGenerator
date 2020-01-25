@@ -12,6 +12,7 @@ import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Game implements Serializable {
+    
     private Map map;
     private Integer defaultUnitsNum;
     private Vector<Unit> units;
@@ -22,6 +23,8 @@ public class Game implements Serializable {
     private int maxGameTime = 1000;
     @JsonIgnore
     private int sleepTime = 500;
+    @JsonIgnore
+    private double spawnTreeProbability = 0.3;
 
     public Game() {
         map = new Map(180, 180);
@@ -136,12 +139,12 @@ public class Game implements Serializable {
         }
     }
 
-    public void spawnHerb() {
+    private void spawnHerb() {
         double flip = Math.random();
         // depends on temperature
-        if ((double)map.getTemperature()/100 < flip) {
+        if ((double) map.getTemperature()/100 < flip) {
             flip = Math.random();
-            if (flip < 0.3) {
+            if (flip < spawnTreeProbability) {
                 Tree u = new Tree();
                 giveCoordinates(u);
                 units.add(u);

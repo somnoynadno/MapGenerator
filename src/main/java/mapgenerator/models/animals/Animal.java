@@ -164,7 +164,7 @@ public abstract class Animal extends Unit {
     protected void tryMakeChild(Vector<Unit> units){
         if (partner != null && child == null) {
             double flip = Math.random();
-            if (flip < (float) yearsAlive / 2000) {
+            if (flip < (float) yearsAlive / 10000) {
                 try {
                     child = getClass().newInstance();
                 } catch (InstantiationException | IllegalAccessException e) {

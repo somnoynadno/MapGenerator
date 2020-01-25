@@ -17,7 +17,7 @@ public class Human extends Animal {
     private House house;
 
     @JsonIgnore
-    private double farmBuildProbability = 0.12;
+    private double farmBuildProbability = 0.15;
 
     public Human() {
         super();
@@ -61,12 +61,12 @@ public class Human extends Animal {
     @Override
     protected void tryHuntAndMove(Map map, Vector<Unit> units) {
         boolean huntResult = false;
-        if (hunger < 80) {
+        if (hunger < minHungerForHunt) {
             huntResult = hunt(units);
         }
         if (!huntResult) {
             double flip = Math.random();
-            if (flip < 0.3) {
+            if (flip < addPartnerProbability) {
                 if (partner == null && house != null)
                     searchForPartner(units);
             } else {
